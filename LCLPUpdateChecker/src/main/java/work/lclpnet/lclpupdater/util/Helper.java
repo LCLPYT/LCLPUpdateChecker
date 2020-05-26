@@ -10,6 +10,10 @@ public class Helper {
 	private static final String WIN_EXE_NAME = "LCLPLauncher.exe",
 			WIN_EXE_STANDARD = System.getProperty("user.home") + "\\AppData\\Local\\Programs\\lclplauncher\\" + WIN_EXE_NAME;
 
+	public static void main(String[] args) {
+		startLCLPLauncher(b -> {});
+	}
+	
 	public static void startLCLPLauncher(Consumer<Boolean> successHandler) {
 		File exe = getLauncherExecuteable();
 		if(exe == null) {
@@ -26,7 +30,7 @@ public class Helper {
 		System.out.println("Found executeable at: '" + exe.getAbsolutePath() + "'.");
 		
 		try {
-			Runtime.getRuntime().exec("\"" + exe.getAbsolutePath() + "\" --update=ls5");
+			Runtime.getRuntime().exec("cmd /C cd \"" + exe.getParentFile().getAbsolutePath() + "\" & \"" + exe.getAbsolutePath() + "\" --update=ls5");
 			successHandler.accept(true);
 		} catch (IOException e) {
 			successHandler.accept(false);
