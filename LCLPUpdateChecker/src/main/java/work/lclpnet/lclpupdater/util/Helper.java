@@ -10,10 +10,6 @@ public class Helper {
 	private static final String WIN_EXE_NAME = "LCLPLauncher.exe",
 			WIN_EXE_STANDARD = System.getProperty("user.home") + "\\AppData\\Local\\Programs\\lclplauncher\\" + WIN_EXE_NAME;
 
-	public static void main(String[] args) {
-		startLCLPLauncher(b -> {});
-	}
-	
 	public static void startLCLPLauncher(Consumer<Boolean> successHandler) {
 		File exe = getLauncherExecuteable();
 		if(exe == null) {
