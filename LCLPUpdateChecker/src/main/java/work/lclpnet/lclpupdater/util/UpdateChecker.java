@@ -15,7 +15,7 @@ import com.google.gson.Gson;
 
 public class UpdateChecker {
 
-	private static final String INSTALLATION_URL = "https://lclpnet.work/dl/ls5-installation";
+	private static final String INSTALLATION_URL = "https://lclpnet.work/lclplauncher/installations/ls5/info";
 
 	private static volatile Installation updateInfo = null;
 	private static volatile boolean updateRequired = false;
