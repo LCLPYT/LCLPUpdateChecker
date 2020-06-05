@@ -2,6 +2,7 @@ package work.lclpnet.lclpupdater.event;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.MainMenuScreen;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraftforge.event.TickEvent.ClientTickEvent;
 import net.minecraftforge.event.TickEvent.Phase;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -18,10 +19,15 @@ public class EventListener {
 	
 	@SubscribeEvent
 	public static void onClientTick(ClientTickEvent e) {
-		if(UpdateChecker.needsUpdate() && e.phase == Phase.START && Minecraft.getInstance().currentScreen instanceof MainMenuScreen && !updateScreenShown) {
+		if(UpdateChecker.needsUpdate() && e.phase == Phase.START && isMainScreen() && !updateScreenShown) {
 			updateScreenShown = true;
 			Minecraft.getInstance().displayGuiScreen(new UpdateScreen(UpdateChecker.getUpdateInfo()));
 		}
+	}
+
+	private static boolean isMainScreen() {
+		Screen screen = Minecraft.getInstance().currentScreen;
+		return screen instanceof MainMenuScreen || screen.getClass().getName().equals("work.lclpnet.mmo.gui.MMOMainScreen");
 	}
 	
 }
