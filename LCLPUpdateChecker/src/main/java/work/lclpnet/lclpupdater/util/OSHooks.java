@@ -8,8 +8,13 @@ public class OSHooks {
 
 	private static class OSHandler {
         public void startLCLPLauncher(Consumer<Boolean> successHandler) {
-        	System.err.println("Error, the automatic LCLPLauncher start is currently only available on Windows.");
-        	successHandler.accept(false);
+			try {
+				Runtime.getRuntime().exec("lclplauncher --update=ls5");
+				successHandler.accept(true);
+			} catch (IOException e) {
+				successHandler.accept(false);
+				e.printStackTrace();
+			}
         }
     }
 

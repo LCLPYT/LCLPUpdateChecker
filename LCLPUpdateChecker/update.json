@@ -1,8 +1,8 @@
 {
     "homepage": "https://github.com/LCLPYT/LCLPUpdateChecker/releases",
     "promos": {
-        "1.15.2-latest": "1.0.1",
-        "1.15.2-recommended": "1.0.1"
+        "1.15.2-latest": "1.0.4",
+        "1.15.2-recommended": "1.0.4"
     },
     "1.15.2": {
         "1.0.3": "First release.",
