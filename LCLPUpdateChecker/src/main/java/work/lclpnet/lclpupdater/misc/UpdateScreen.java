@@ -24,13 +24,15 @@ public class UpdateScreen extends Screen{
 	protected void init() {
 		super.init();
 		
-		addButton(new Button(this.width / 2 - 100, (int) (this.height * 0.45), 200, 20, "§l§a" + I18n.format("lclpupdater.update"), obj -> {
+		char colorChar = '\u00a7';
+		
+		addButton(new Button(this.width / 2 - 100, (int) (this.height * 0.45), 200, 20, colorChar + "l" + colorChar + "a" + I18n.format("lclpupdater.update"), obj -> {
 			Helper.startLCLPLauncher(success -> {
 				if(success) this.minecraft.shutdown();
 				else startFailed = true;
 			});
 		}));
-		addButton(new Button(this.width / 2 - 100, (int) (this.height * 0.55), 200, 20, "§c" + I18n.format("lclpupdater.cancel"), obj -> this.minecraft.shutdown()));
+		addButton(new Button(this.width / 2 - 100, (int) (this.height * 0.55), 200, 20, colorChar + "c" + I18n.format("lclpupdater.cancel"), obj -> this.minecraft.shutdown()));
 	}
 	
 	@Override

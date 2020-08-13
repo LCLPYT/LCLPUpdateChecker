@@ -1,7 +1,6 @@
 package work.lclpnet.lclpupdater.util;
 
 import java.io.File;
-import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.function.Consumer;
 
@@ -11,34 +10,11 @@ public class Helper {
 			WIN_EXE_STANDARD = System.getProperty("user.home") + "\\AppData\\Local\\Programs\\lclplauncher\\" + WIN_EXE_NAME;
 
 	public static void startLCLPLauncher(Consumer<Boolean> successHandler) {
-		File exe = getLauncherExecuteable();
-		if(exe == null) {
-			System.out.println("Could not find the LCLPLauncher executeable anywhere...");
-			successHandler.accept(false);
-			return;
-		}
-		else if(!exe.exists()) {
-			System.err.println("Error, '" + exe.getAbsolutePath() + "' does not exist.");
-			successHandler.accept(false);
-			return;
-		}
-
-		System.out.println("Found executeable at: '" + exe.getAbsolutePath() + "'.");
-		
-		try {
-			Runtime.getRuntime().exec("cmd /C cd \"" + exe.getParentFile().getAbsolutePath() + "\" & \"" + exe.getAbsolutePath() + "\" --update=ls5");
-			successHandler.accept(true);
-		} catch (IOException e) {
-			successHandler.accept(false);
-			e.printStackTrace();
-		}
+		OSHooks.startLCLPLauncher(successHandler);
 	}
 
-	private static File getLauncherExecuteable() {
-		if(!OsUtils.isWindows()) {
-			System.err.println("Error, the automatic LCLPLauncher start is currently only available on Windows.");
-			return null;
-		}
+	public static File getLauncherWindowsExecuteable() {
+		if(!OsUtils.isWindows()) return null;
 		
 		File standard = new File(WIN_EXE_STANDARD);
 		if(standard.exists()) {
