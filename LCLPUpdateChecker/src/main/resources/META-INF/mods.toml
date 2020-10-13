@@ -1,9 +1,9 @@
-
 modLoader="javafml"
-loaderVersion="[31,)"
+loaderVersion="[34,)"
 issueTrackerURL="https://github.com/LCLPYT/LCLPUpdateChecker/issues"
 displayURL="https://github.com/LCLPYT/LCLPUpdateChecker"
 authors="LCLP"
+license="MIT"
 
 [[mods]]
     modId="lclpupdater"
@@ -20,13 +20,13 @@ authors="LCLP"
     [[dependencies.lclpupdater]]
         modId="forge"
         mandatory=true
-        versionRange="[31,)"
+        versionRange="[34,)"
         ordering="NONE"
         side="BOTH"
     [[dependencies.lclpupdater]]
         modId="minecraft"
         mandatory=true
-        versionRange="[1.15.2]"
+        versionRange="[1.16.3]"
         ordering="NONE"
         side="BOTH"
 

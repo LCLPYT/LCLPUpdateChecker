@@ -10,6 +10,7 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import work.lclpnet.lclpupdater.LCLPUpdateChecker;
 import work.lclpnet.lclpupdater.misc.UpdateScreen;
+import work.lclpnet.lclpupdater.util.MainScreenChecker;
 import work.lclpnet.lclpupdater.util.UpdateChecker;
 
 @EventBusSubscriber(modid = LCLPUpdateChecker.MODID, bus = Bus.FORGE)
@@ -27,7 +28,7 @@ public class EventListener {
 
 	private static boolean isMainScreen() {
 		Screen screen = Minecraft.getInstance().currentScreen;
-		return screen instanceof MainMenuScreen || screen.getClass().getName().equals("work.lclpnet.mmo.gui.MMOMainScreen");
+		return screen instanceof MainMenuScreen || MainScreenChecker.isMainScreen(screen);
 	}
 	
 }
