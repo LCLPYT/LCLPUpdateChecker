@@ -1,5 +1,5 @@
 modLoader="javafml"
-loaderVersion="[34,)"
+loaderVersion="[35,)"
 issueTrackerURL="https://github.com/LCLPYT/LCLPUpdateChecker/issues"
 displayURL="https://github.com/LCLPYT/LCLPUpdateChecker"
 authors="LCLP"
@@ -9,7 +9,7 @@ license="MIT"
     modId="lclpupdater"
     version="${version}"
     displayName="LCLPUpdateChecker"
-    updateJSONURL="https://raw.githubusercontent.com/LCLPYT/LCLPUpdateChecker/master/LCLPUpdateChecker/update.json"
+    updateJSONURL="https://raw.githubusercontent.com/LCLPYT/LCLPUpdateChecker/master/update.json"
     logoFile="logo.png"
     credits="LCLPNetwork!"
     description='''
@@ -20,13 +20,13 @@ license="MIT"
     [[dependencies.lclpupdater]]
         modId="forge"
         mandatory=true
-        versionRange="[34,)"
+        versionRange="[35,)"
         ordering="NONE"
         side="BOTH"
     [[dependencies.lclpupdater]]
         modId="minecraft"
         mandatory=true
-        versionRange="[1.16.3]"
+        versionRange="[1.16.4]"
         ordering="NONE"
         side="BOTH"
 
