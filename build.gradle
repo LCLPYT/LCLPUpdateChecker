@@ -36,14 +36,19 @@ def getVersion = {
     return "${tag}.${offset}${t -> if (branch != null) t << '-' + branch}".toString()
 }
 
+def privateProps = new Properties()
+def privatePropsFile = file("private.properties");
+if(privatePropsFile.exists())
+    privatePropsFile.withInputStream { privateProps.load(it) }
+
 version = getVersion()
-group = 'work.lclpnet.lclpupdater'
+group = 'work.lclpnet.mods'
 archivesBaseName = 'lclpupdater'
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
 
 minecraft {
-    mappings channel: 'snapshot', version: '20201028-1.16.3'
+    mappings channel: (String) project.property('mapping_channel'), version: (String) project.property('mapping_version')
     
     // accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 
@@ -101,7 +106,7 @@ minecraft {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.16.4-35.1.37'
+    minecraft "net.minecraftforge:forge:${project.property('mc_version')}-${project.property('forge_version')}"
 }
 
 jar {
@@ -132,12 +137,14 @@ publishing {
     }
     repositories {
         maven {
-            if (project.hasProperty('mavenPassword') && project.hasProperty('mavenHost')) {
+            if (privateProps.containsKey('mavenPassword')
+                    && privateProps.containsKey('mavenHost')
+                    && privateProps.containsKey('mavenUser')) {
                 credentials {
-                    username project.properties.mavenUser
-                    password project.properties.mavenPassword
+                    username privateProps.getProperty('mavenUser');
+                    password privateProps.getProperty('mavenPassword');
                 }
-                url project.properties.mavenHost
+                url privateProps.getProperty('mavenHost');
             } else {
                 url "file:///${project.projectDir}/mcmodsrepo"
             }

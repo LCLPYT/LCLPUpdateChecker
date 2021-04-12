@@ -29,7 +29,7 @@ public class UpdateChecker {
 	}
 
 	public static void checkForUpdates() {
-		new Thread(UpdateChecker::check, "Update Checker").run();
+		new Thread(UpdateChecker::check, "Update Checker").start();
 	}
 	
 	private static void check() {

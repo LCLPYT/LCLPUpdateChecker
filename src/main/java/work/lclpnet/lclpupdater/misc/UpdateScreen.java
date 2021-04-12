@@ -62,7 +62,7 @@ public class UpdateScreen extends Screen{
 		for (IReorderingProcessor s : fr.trimStringToWidth(str, this.width)) {
 			mStack.push();
 			mStack.scale(scale, scale, scale);
-			fr.func_238407_a_(mStack, s, (float) (x - fr.func_243245_a(s) / 2.0), y, color);
+			fr.drawTextWithShadow(mStack, s, (float) (x - fr.func_243245_a(s) / 2.0), y, color);
 			mStack.pop();
 			y += fr.FONT_HEIGHT * scale;
 		}
