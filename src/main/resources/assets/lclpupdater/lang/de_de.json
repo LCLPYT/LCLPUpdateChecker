@@ -1,7 +1,7 @@
 {
-    "lclpupdater.title": "Update verfügbar",
-    "lclpupdater.desc": "Version %s ist verfügbar.",
-    "lclpupdater.update": "Updaten",
-    "lclpupdater.cancel": "Abbrechen",
-    "lclpupdater.startfailed": "Konnte den LCLPLauncher nicht automatisch starten.\nBitte schließe Minecraft und starte den LCLPLauncher manuell.\n\nBitte beachte: Du musst den 'Update' Knopf im LCLPServer 5.0 Tab drücken!"
+  "lclpupdater.title": "Update verfügbar",
+  "lclpupdater.desc": "Version %s ist verfügbar.",
+  "lclpupdater.update": "Updaten",
+  "lclpupdater.cancel": "Abbrechen",
+  "lclpupdater.startfailed": "Konnte den LCLPLauncher nicht automatisch starten.\nBitte schließe Minecraft und starte den LCLPLauncher manuell.\n\nBitte beachte: Du musst den 'Update' Knopf im LCLPServer 5.0 Tab drücken!"
 }

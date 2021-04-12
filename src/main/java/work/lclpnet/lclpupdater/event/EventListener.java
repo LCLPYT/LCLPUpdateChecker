@@ -16,19 +16,19 @@ import work.lclpnet.lclpupdater.util.UpdateChecker;
 @EventBusSubscriber(modid = LCLPUpdateChecker.MODID, bus = Bus.FORGE)
 public class EventListener {
 
-	private static boolean updateScreenShown = false;
-	
-	@SubscribeEvent
-	public static void onClientTick(ClientTickEvent e) {
-		if(UpdateChecker.needsUpdate() && e.phase == Phase.START && isMainScreen() && !updateScreenShown) {
-			updateScreenShown = true;
-			Minecraft.getInstance().displayGuiScreen(new UpdateScreen(UpdateChecker.getUpdateInfo()));
-		}
-	}
+    private static boolean updateScreenShown = false;
 
-	private static boolean isMainScreen() {
-		Screen screen = Minecraft.getInstance().currentScreen;
-		return screen instanceof MainMenuScreen || MainScreenChecker.isMainScreen(screen);
-	}
-	
+    @SubscribeEvent
+    public static void onClientTick(ClientTickEvent e) {
+        if (UpdateChecker.needsUpdate() && e.phase == Phase.START && isMainScreen() && !updateScreenShown) {
+            updateScreenShown = true;
+            Minecraft.getInstance().displayGuiScreen(new UpdateScreen(UpdateChecker.getUpdateInfo()));
+        }
+    }
+
+    private static boolean isMainScreen() {
+        Screen screen = Minecraft.getInstance().currentScreen;
+        return screen instanceof MainMenuScreen || MainScreenChecker.isMainScreen(screen);
+    }
+
 }
