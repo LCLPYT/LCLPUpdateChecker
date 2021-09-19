@@ -7,16 +7,13 @@ import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.util.IReorderingProcessor;
 import net.minecraft.util.text.*;
 import work.lclpnet.lclpupdater.util.Helper;
-import work.lclpnet.lclpupdater.util.Installation;
 
 public class UpdateScreen extends Screen {
 
-    protected Installation info;
     private boolean startFailed = false;
 
-    public UpdateScreen(Installation install) {
+    public UpdateScreen() {
         super(new StringTextComponent("Update"));
-        this.info = install;
     }
 
     @Override
@@ -25,12 +22,14 @@ public class UpdateScreen extends Screen {
 
         IFormattableTextComponent updateComponent = new TranslationTextComponent("lclpupdater.update")
                 .mergeStyle(TextFormatting.GREEN, TextFormatting.BOLD);
-        addButton(new Button(this.width / 2 - 100, (int) (this.height * 0.45), 200, 20, updateComponent, obj -> {
-            Helper.startLCLPLauncher(success -> {
-                if (success) this.minecraft.shutdown();
-                else startFailed = true;
-            });
-        }));
+        addButton(new Button(this.width / 2 - 100, (int) (this.height * 0.45), 200, 20, updateComponent, obj -> Helper.startLCLPLauncher().thenRun(() -> {
+            if (this.minecraft != null) this.minecraft.shutdown();
+        }).exceptionally(err -> {
+            System.err.println("Error while starting LCLPLauncher:");
+            err.printStackTrace();
+            startFailed = true;
+            return null;
+        })));
 
         IFormattableTextComponent cancelComponent = new TranslationTextComponent("lclpupdater.cancel")
                 .mergeStyle(TextFormatting.RED);
@@ -42,7 +41,7 @@ public class UpdateScreen extends Screen {
         this.renderBackground(mStack);
 
         drawMultiLineCenteredString(mStack, font, new TranslationTextComponent("lclpupdater.title"), 2F, this.width / 2, (int) (this.height * 0.05), 0xfaaf37);
-        drawMultiLineCenteredString(mStack, font, new TranslationTextComponent("lclpupdater.desc", info.getVersion()), 1F, this.width / 2, (int) (this.height * 0.2), 0xffffff);
+        drawMultiLineCenteredString(mStack, font, new TranslationTextComponent("lclpupdater.desc", "?"), 1F, this.width / 2, (int) (this.height * 0.2), 0xffffff);
 
         if (startFailed)
             drawMultiLineCenteredString(mStack, font, new TranslationTextComponent("lclpupdater.startfailed"), 1F, this.width / 2, (int) (this.height * 0.75), 0xff0000);

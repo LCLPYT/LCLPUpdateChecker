@@ -8,14 +8,13 @@ import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import work.lclpnet.lclpupdater.event.EventListener;
 import work.lclpnet.lclpupdater.util.MainScreenChecker;
 import work.lclpnet.lclpupdater.util.UpdateChecker;
 
-@Mod(LCLPUpdateChecker.MODID)
+@Mod(LCLPUpdateChecker.MOD_ID)
 public class LCLPUpdateChecker {
 
-    public static final String MODID = "lclpupdater";
+    public static final String MOD_ID = "lclpupdater";
     private static final Logger LOGGER = LogManager.getLogger();
 
     public LCLPUpdateChecker() {
@@ -25,10 +24,9 @@ public class LCLPUpdateChecker {
 
         IEventBus bus = MinecraftForge.EVENT_BUS;
         bus.register(this);
-        bus.register(new EventListener());
     }
 
-    private void setup(final FMLCommonSetupEvent event) { //preinit
+    private void setup(final FMLCommonSetupEvent event) {
         LOGGER.info("LCLPUpdateChecker initializing...");
 
         UpdateChecker.checkForUpdates();

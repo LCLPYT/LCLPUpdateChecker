@@ -1,23 +1,12 @@
 package work.lclpnet.lclpupdater.util;
 
-import com.google.gson.Gson;
-import org.apache.commons.io.IOUtils;
-
-import java.io.*;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
-import java.util.Base64;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class UpdateChecker {
 
-    private static final String INSTALLATION_URL = "https://lclpnet.work/lclplauncher/installations/ls5/info";
-
-    private static volatile Installation updateInfo = null;
     private static volatile boolean updateRequired = false;
-
-    public static Installation getUpdateInfo() {
-        return updateInfo;
-    }
 
     public static boolean needsUpdate() {
         return updateRequired;
@@ -30,35 +19,36 @@ public class UpdateChecker {
     private static void check() {
         System.out.println("Checking for updates...");
 
-        try (InputStream in = new URL(INSTALLATION_URL).openStream()) {
-            updateInfo = Installation.fromInputStream(in);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return;
-        }
-
-        File local = new File(".installation");
-        if (!local.exists()) {
-            updateRequired = true;
-            System.out.println("Update is required. (local installation no longer valid)");
-            return;
-        }
-
-        String base64;
-        try (InputStream in = new FileInputStream(local);
-             ByteArrayOutputStream out = new ByteArrayOutputStream()) {
-            IOUtils.copy(in, out);
-            base64 = new String(out.toByteArray(), StandardCharsets.UTF_8);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return;
-        }
-
-        String decoded = new String(Base64.getDecoder().decode(base64), StandardCharsets.UTF_8);
-        Installation localInstall = new Gson().fromJson(decoded, Installation.class);
-
-        updateRequired = localInstall.getVersionNumber() < updateInfo.getVersionNumber();
-        System.out.println("An update to version " + updateInfo.getVersion() + " is required.");
+        Helper.getLCLPLauncherExecutable()
+                .thenAcceptAsync(UpdateChecker::checkForUpdates)
+                .exceptionally(ex -> {
+                    ex.printStackTrace();
+                    return null;
+                });
     }
 
+    private static void checkForUpdates(String exe) {
+        if (exe == null) throw new IllegalStateException("LCLPLauncher executable could not be found.");
+
+        try {
+            Process process = new ProcessBuilder(exe, "check-for-app-update", "ls5")
+                    .redirectErrorStream(true)
+                    .start();
+
+            try (BufferedReader in = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
+                String line;
+                while ((line = in.readLine()) != null) {
+                    if ("[update-check]: Result -> NEEDS_UPDATE".equals(line)) {
+                        updateRequired = true;
+                        System.out.println("An update is available.");
+                        break;
+                    }
+                }
+                process.waitFor();
+                if (!updateRequired) System.out.println("No update available.");
+            }
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 }

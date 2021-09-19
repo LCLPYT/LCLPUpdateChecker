@@ -13,7 +13,7 @@ import work.lclpnet.lclpupdater.misc.UpdateScreen;
 import work.lclpnet.lclpupdater.util.MainScreenChecker;
 import work.lclpnet.lclpupdater.util.UpdateChecker;
 
-@EventBusSubscriber(modid = LCLPUpdateChecker.MODID, bus = Bus.FORGE)
+@EventBusSubscriber(modid = LCLPUpdateChecker.MOD_ID, bus = Bus.FORGE)
 public class EventListener {
 
     private static boolean updateScreenShown = false;
@@ -22,7 +22,7 @@ public class EventListener {
     public static void onClientTick(ClientTickEvent e) {
         if (UpdateChecker.needsUpdate() && e.phase == Phase.START && isMainScreen() && !updateScreenShown) {
             updateScreenShown = true;
-            Minecraft.getInstance().displayGuiScreen(new UpdateScreen(UpdateChecker.getUpdateInfo()));
+            Minecraft.getInstance().displayGuiScreen(new UpdateScreen());
         }
     }
 

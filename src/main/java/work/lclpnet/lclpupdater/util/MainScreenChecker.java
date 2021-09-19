@@ -17,7 +17,7 @@ public class MainScreenChecker {
 
     public static void tryAccept(IMCMessage msg) {
         if (!"defineStartingScreens".equals(msg.getMethod())
-                || !LCLPUpdateChecker.MODID.equals(msg.getModId())) return;
+                || !LCLPUpdateChecker.MOD_ID.equals(msg.getModId())) return;
 
         Object o = msg.getMessageSupplier().get();
         if (!(o instanceof Class<?>[])) return;
