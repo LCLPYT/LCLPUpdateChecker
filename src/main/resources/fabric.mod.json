@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "id": "modid",
+  "version": "${version}",
+
+  "name": "LCLPUpdateChecker",
+  "description": "A tiny update checker mod that notifies the user when a LCLPLauncher Minecraft App has to be updated.",
+  "authors": [
+    "LCLP"
+  ],
+  "contact": {
+    "homepage": "https://github.com/LCLPYT/LCLPUpdateChecker",
+    "sources": "https://github.com/LCLPYT/LCLPUpdateChecker"
+  },
+
+  "license": "MIT",
+  "icon": "assets/lclpupdater/icon.png",
+
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "work.lclpnet.lclpupdater.LCLPUpdateChecker"
+    ]
+  },
+  "mixins": [
+    "lclpupdater.mixins.json"
+  ],
+
+  "depends": {
+    "fabricloader": ">=0.12.12",
+    "fabric": "*",
+    "minecraft": "1.16.x"
+  },
+  "suggests": {}
+}
